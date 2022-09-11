@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sarabun">
+    <style>body {font-family: "Sarabun"; font-size: 12pt;}th,td {text-align: center }</style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <title>แต่งตั้งครูเวร Paijit-BOT</title>
+</head>
+<script>
+    function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+              forms[i].addEventListener('submit', function(event) {
+              event.preventDefault();
+              });
+        }
+    }
+    window.addEventListener("load", preventFormSubmit, true);                          
+</script>
+
+<body>
+    <?var url = getUrl(); ?>
+    <input type="text" hidden id="url" value = "<?= url ?>">
+
+     <div class="container-fluid" style="content-justify:center; width:80vw;">
+        <nav class="">
+            <div class="row card text-center pt-2 pb-2" style="margin:5px;background-color:#9F79A3; font-family:Sarabun; font-size: 16pt;">
+                <h5 class="m-0 mb-2"><strong>แต่งตั้งครูเวร Paijit-BOT</strong></h5>
+                <button class="btn btn-warning" style="width:20vw; margin:auto;" id="assignSet" onclick="back()">กลับไปหน้ารายงานปัญหา</button>
+            </div>
+        </nav>
+
+        <div class="row" style="font-family:Sarabun; font-size: 12pt;">
+            <div class="col-6" style="font-family:Sarabun; font-size: 12pt;">
+              <div class="row card m-2" style="width:38vw; height:45vh; overflow:auto;">
+                <table class="table m-3 table-bordered table-sm text-center" style="border:1px; cellpadding:5px; width:95%; font-size: 12pt; ">
+                  <tr style="background-color:#4737AD; color:white;"><th>รหัสบุคลากร</th><th>ชื่อ นามสกุล</th><th>เบอร์โทร</th><th>Line Id</th></tr>
+                  <tbody>
+                  <? var tableData1 = getSheetData1(); ?>
+                  <? for(var i = 1; i<tableData1.length; i++) {?>
+                      <tr>
+                        <td><?=tableData1[i][0]; ?></td>                          
+                        <td><?=tableData1[i][1]; ?></td>                          
+                        <td><?=tableData1[i][2]; ?></td>                          
+                        <td><?=tableData1[i][3]; ?></td>                          
+                      </tr>
+                  <? }?>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row card m-2 mt-3" style="width:38vw; height:40vh;">
+                <table class="table m-3 table-bordered table-sm text-center" id="tableId2" style="border:1px; cellpadding:5px; width:95%; font-size: 12pt;">
+                  <tr style="background-color: #ADA1FA;"><th>ภาคเรียนที่</th><th>เวรประจำวัน</th><th>รหัสครูเวร</th></tr>
+                  <tbody id="tableBody" style="background-color:#F4ECF7;">
+                    <!-- พื้นที่แสดงการแต่งตั้งปัจจุบัน -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-6" style="font-family:Sarabun; font-size: 12pt;">
+              <div class="container card m-2 mb-2" style="width:36vw; height:87vh; background-color:light;">
+                <div class="row card text-center text-white m-3 pt-2" style="margin:5px;background-color:#4737AD">
+                    <h5 m-0><strong>การแต่งตั้งครูเวร</strong></h5>
+                </div>
+                <form id="save-form" onsubmit="handleFormSubmit(this)" >
+                    <div class="row card ml-2 mr-2 mb-4" style="font-family:Sarabun; font-size: 12pt; display:inherit;" >
+                      <div class="row mt-4">
+                            <label class="col-sm-5 p-0 pr-3 mt-1 text-right">ภาคเรียนที่แต่งตั้ง :</label>
+                            <div class="col-sm-5 p-0">
+                              <input type="text" class="form-control form-control-sm" style="font-size: 12pt;" id="Aterm" name="Aterm" value="1/2566" size=11 placeholder="ภาคเรียนที่/ปีการศึกษา" required>
+                            </div>
+                      </div>
+                      <div class="row mt-1">
+                            <label class="col-sm-5 p-0 pr-3 mt-1 text-right">เวรประจำวัน :</label>
+                            <div class="col-sm-5 p-0">
+                              <select class="form-control form-control-sm" id="Aday" name="Aday" style="font-size: 12pt;" required>
+                                  <option value=" ">เลือกวัน</option>
+                                  <option value="1">Monday</option>
+                                  <option value="2">Tuesday</option>
+                                  <option value="3">Wednesday</option>
+                                  <option value="4">Thursday</option>
+                                  <option value="5">Friday</option>
+                                  <option value="6">Saturday</option>
+                                  <option value="7">Sunday</option>
+                              </select>
+                            </div>
+                      </div>
+                      <div class="row mt-1">
+                            <label class="col-sm-5 p-0 pr-3 mt-1 text-right">กำหนดครูเวร :</label>
+                            <div class="col-sm-5 p-0">
+                              <select class="form-control form-control-sm" id="Atid" name="Atid" style="font-size: 12pt;" required>     
+                                <option value = ''selected >เลือกครูเวร</option>        
+                                <? var tableData1 = getSheetData1(); ?>
+                                <? for(var i = 1; i<tableData1.length; i++) {?>
+                                    <option value = "<?=tableData1[i][0]; ?>"><?=tableData1[i][1]; ?></option>                          
+                                <? }?>
+                              </select>
+                            </div>
+                      </div>
+                      <div class="row mt-2 mb-4">
+                        <div class="col text-center mt-3">
+                            <input type="submit" class="btn-sm btn-primary m-auto" id="assignBtn" style="width:150px; font-size: 12pt;" value="แต่งตั้งครูเวร">
+                        </div>
+                      </div>
+                    </div>
+                </form>
+                <div class="col m-3 mt-5">
+                  <img src="https://drive.google.com/uc?export=view&id=1cE4le89w7UfggIX0scdBKrpmPshEklZw" class="img-fluid" style="border-radius: 10%; width:30vw; height:auto;">                
+                </div>                  
+            </div>
+        </div>
+    </div>   
+
+    <script>
+      //เมื่อโหลด App Page ครั้งแรก
+      window.onload = () => { 
+          google.script.run.withSuccessHandler(createTable).getSheetData2();      
+      }
+
+      function createTable(tableData2){
+        var result = '';
+           for(var i = 1; i<tableData2.length; i++) {
+            result += '<tr><td>'+tableData2[i][0]+'</td><td>'+tableData2[i][2]+'</td><td><b>'+tableData2[i][3]+'</b></td></tr>';
+          }
+        document.getElementById('tableBody').innerHTML = result;
+      }
+
+      //เมื่อมีการคลิกปุ่ม แต่งตั้ง
+      function saveData(){
+          var dataA = {}
+              dataA.aterm = document.getElementById("Aterm").value;
+              dataA.aday = document.getElementById("Aday").value;
+              dataA.atid = document.getElementById("Atid").value;
+          google.script.run.saveAssign(dataA);                      
+      }
+
+      function handleFormSubmit(formObject){
+        saveData();
+        google.script.run.withSuccessHandler(createTable).getSheetData2();
+      }
+
+      function back(){
+          var url = document.getElementById('url').value;
+          var link = document.createElement('a');
+          link.href = url+"?";
+          link.id = 'linkURL';
+          document.body.appendChild(link);
+          document.getElementById('linkURL').click();
+      }
+    </script>
+</body>
+</html>
