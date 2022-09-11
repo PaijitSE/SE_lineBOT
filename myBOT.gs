@@ -402,7 +402,7 @@ function getUserProfiles(userId) {
   var url = "https://api.line.me/v2/bot/profile/" + userId;
   var lineHeader = {
     "Content-Type": "application/json",
-   "Authorization": "Bearer L0CrHhRliIjBiqsvMvBzV3oUUj8MSRSMh3nzSHhtalNICIKL/uqzRdDtE0er+yiIQGEBu9M6JpCKW7r5+/Cgj0zBvqMZyKGIPhEGv/WmGft+N/cIVw6yg5cR2qMvWFObZRvERYupEXGd/lS/Bmm6PAdB04t89/1O/w1cDnyilFU=" 
+   "Authorization": "Bearer ระบุค่า Autherization-code of line developers" 
   };
   
   var options = {
