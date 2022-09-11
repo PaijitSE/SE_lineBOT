@@ -1,2 +1,6 @@
-# se_lineBOT
-sample script  of Line BOT project
+Line BOT project
+- Apps Scripts
+- Google Sheets
+- Dialogflow
+- line Developers
+- This is sample script for student project
