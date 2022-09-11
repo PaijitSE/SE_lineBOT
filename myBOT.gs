@@ -1,4 +1,4 @@
-var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Rr97vXLziUoHvJAKwdKP0jy_Wmv3zafsQOEXtzU0tvo/edit#gid=0")
+var ss = SpreadsheetApp.openByUrl("ระบุ Link ของ Google Sheets")
 var sheet1 = ss.getSheetByName("AddFriend");
 var sheet2 = ss.getSheetByName("ReportIssue");
 var sheet3 = ss.getSheetByName("Problem");
